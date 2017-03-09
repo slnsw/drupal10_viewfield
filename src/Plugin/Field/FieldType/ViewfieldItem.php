@@ -53,7 +53,7 @@ class ViewfieldItem extends EntityReferenceItem {
 
     $schema['columns']['display_id'] = [
       'description' => 'The ID of the view display.',
-      'type' => 'varchar',
+      'type' => 'varchar_ascii',
       'length' => 255,
     ];
 
