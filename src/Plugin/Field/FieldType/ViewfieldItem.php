@@ -168,7 +168,7 @@ class ViewfieldItem extends EntityReferenceItem {
         $views_options[$key] = FieldFilteredMarkup::create($view->get('label'));
       }
     }
-    natcasesort($views_options);
+    uasort($views_options, '\Drupal\Component\Utility\Unicode::strcasecmp');
 
     return $views_options;
   }
@@ -189,13 +189,13 @@ class ViewfieldItem extends EntityReferenceItem {
     $display_options = [];
     $views = Views::getEnabledViews();
     if (isset($views[$entity_id])) {
+      $allowed_display_types = $filter ? array_filter($this->getSetting('allowed_display_types')) : [];
       foreach ($views[$entity_id]->get('display') as $key => $display) {
-        $allowed_display_types = $filter ? array_filter($this->getSetting('allowed_display_types')) : [];
         if (empty($allowed_display_types) || isset($allowed_display_types[$display['display_plugin']])) {
           $display_options[$key] = FieldFilteredMarkup::create($display['display_title']);
         }
       }
-      natcasesort($display_options);
+      uasort($display_options, '\Drupal\Component\Utility\Unicode::strcasecmp');
     }
 
     return $display_options;
@@ -214,7 +214,7 @@ class ViewfieldItem extends EntityReferenceItem {
         $display_type_options[str_replace('display:', '', $key)] = FieldFilteredMarkup::create($type['title']);
       }
     }
-    natcasesort($display_type_options);
+    uasort($display_type_options, '\Drupal\Component\Utility\Unicode::strcasecmp');
 
     return $display_type_options;
   }
