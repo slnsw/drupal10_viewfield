@@ -41,6 +41,7 @@ class ViewfieldFormatterDefault extends FormatterBase {
       '#default_value' => $this->getSetting('view_title'),
       '#description' => $this->t('Option to render the view display title.'),
     ];
+
     $form['always_build_output'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Always build output'),
@@ -131,7 +132,7 @@ class ViewfieldFormatterDefault extends FormatterBase {
     foreach ($values as $delta => $value) {
       $target_id = $value['target_id'];
       $display_id = $value['display_id'];
-      $arguments = $arguments = $this->processArguments($value['arguments'], $entity);
+      $arguments = $this->processArguments($value['arguments'], $entity);
 
       // @see views_embed_view()
       // @see views_get_view_result()

@@ -168,7 +168,7 @@ class ViewfieldItem extends EntityReferenceItem {
         $views_options[$key] = FieldFilteredMarkup::create($view->get('label'));
       }
     }
-    uasort($views_options, '\Drupal\Component\Utility\Unicode::strcasecmp');
+    natcasesort($views_options);
 
     return $views_options;
   }
@@ -195,7 +195,7 @@ class ViewfieldItem extends EntityReferenceItem {
           $display_options[$key] = FieldFilteredMarkup::create($display['display_title']);
         }
       }
-      uasort($display_options, '\Drupal\Component\Utility\Unicode::strcasecmp');
+      natcasesort($display_options);
     }
 
     return $display_options;
@@ -214,7 +214,7 @@ class ViewfieldItem extends EntityReferenceItem {
         $display_type_options[str_replace('display:', '', $key)] = FieldFilteredMarkup::create($type['title']);
       }
     }
-    uasort($display_type_options, '\Drupal\Component\Utility\Unicode::strcasecmp');
+    natcasesort($display_type_options);
 
     return $display_type_options;
   }
