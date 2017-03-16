@@ -127,7 +127,6 @@ class ViewfieldFormatterDefault extends FormatterBase {
     $always_build_output = $this->getSetting('always_build_output');
     $view_title = $this->getSetting('view_title');
     $empty_view_title = $this->getSetting('empty_view_title');
-    $elements = [];
 
     foreach ($values as $delta => $value) {
       $target_id = $value['target_id'];

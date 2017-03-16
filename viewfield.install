@@ -16,8 +16,8 @@ function viewfield_update_8301() {
   $db_schema = Database::getConnection()->schema();
 
   if (!$field_storage_configs = \Drupal::entityTypeManager()
-    ->getStorage('field_storage_config')
-    ->loadByProperties(['type' => 'viewfield'])) {
+        ->getStorage('field_storage_config')
+        ->loadByProperties(['type' => 'viewfield'])) {
     return;
   }
 
