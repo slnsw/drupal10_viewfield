@@ -152,6 +152,13 @@ class ViewfieldItem extends EntityReferenceItem {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public static function getPreconfiguredOptions() {
+    return [];
+  }
+
+  /**
    * Get an options array of views.
    *
    * @param boolean $filter
