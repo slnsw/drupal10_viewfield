@@ -141,7 +141,7 @@ class ViewfieldWidgetSelect extends OptionsSelectWidget {
     if ($is_multiple) {
       for ($delta = 0; $delta <= $max_delta; $delta++) {
         $element = &$elements[$delta];
-        // Change title to 'View #'
+        // Change title to 'View #'.
         $element['target_id']['#title'] = $this->t('View @number', ['@number' => $delta + 1]);
         // Force title display.
         $element['target_id']['#title_display'] = 'before';
@@ -150,7 +150,7 @@ class ViewfieldWidgetSelect extends OptionsSelectWidget {
     else {
       // $max_delta == 0 for this case.
       $element = &$elements[0];
-      // Change title to simply 'View'
+      // Change title to simply 'View'.
       $element['target_id']['#title'] = $this->t('View');
       // Wrap single values in a fieldset unless on the default settings form,
       // as long as the field is visible (!force_default).
@@ -187,7 +187,6 @@ class ViewfieldWidgetSelect extends OptionsSelectWidget {
     // Drupal\Core\Field\WidgetBase::submit() expects values as
     // an array of values keyed by delta first, then by column, while our
     // widgets return the opposite.
-
     if (is_array($element['#value'])) {
       $values = array_values($element['#value']);
     }
@@ -203,18 +202,17 @@ class ViewfieldWidgetSelect extends OptionsSelectWidget {
     }
 
     // Transpose selections from field => delta to delta => field.
-//    $items = [];
-//    foreach ($values as $value) {
-//      $items[] = [$element['#key_column'] => $value];
-//    }
-//    $form_state->setValueForElement($element, $items);
-
+    //    $items = [];
+    //    foreach ($values as $value) {
+    //      $items[] = [$element['#key_column'] => $value];
+    //    }
+    //    $form_state->setValueForElement($element, $items);.
     $target_id = !empty($values[0]) ? $values[0] : NULL;
     $form_state->setValueForElement($element, $target_id);
   }
 
   /**
-   *  Ajax callback to retrieve display IDs.
+   * Ajax callback to retrieve display IDs.
    *
    * @param array $form
    *   The form from which the display IDs are being requested.
@@ -256,4 +254,5 @@ class ViewfieldWidgetSelect extends OptionsSelectWidget {
   protected function createDisplayClass($components) {
     return implode('-', $components) . '-display-id';
   }
+
 }

@@ -196,7 +196,7 @@ class ViewfieldFormatterDefault extends FormatterBase {
         elseif (($comma = strpos($argument_string, ',', $pos)) !== FALSE) {
           // Otherwise, get everything before next comma.
           $arguments[] = substr($argument_string, $pos, $comma - $pos);
-          // Skip to after comma and repeat
+          // Skip to after comma and repeat.
           $pos = $comma + 1;
           $found = TRUE;
         }
@@ -245,4 +245,5 @@ class ViewfieldFormatterDefault extends FormatterBase {
       'visually_hidden' => '- ' . $this->t('Visually Hidden') . ' -',
     ];
   }
+
 }
