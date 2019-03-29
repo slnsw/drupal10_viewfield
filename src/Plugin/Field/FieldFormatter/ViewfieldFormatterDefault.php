@@ -117,12 +117,7 @@ class ViewfieldFormatterDefault extends FormatterBase {
       }
     }
 
-    // @todo Design and implement a caching strategy.
-    $elements = [
-      '#cache' => [
-        'max-age' => 0,
-      ],
-    ];
+    $elements = [];
 
     $always_build_output = $this->getSetting('always_build_output');
     $view_title = $this->getSetting('view_title');
@@ -145,10 +140,11 @@ class ViewfieldFormatterDefault extends FormatterBase {
       $view->preExecute();
       $view->execute();
 
+      $rendered_view = $view->buildRenderable($display_id, $arguments);
       if (!empty($view->result) || $always_build_output) {
         $elements[$delta] = [
           '#theme' => 'viewfield_item',
-          '#content' => $view->buildRenderable($display_id, $arguments),
+          '#content' => $rendered_view,
           '#title' => $view->getTitle(),
           '#label_display' => empty($view->result) ? $empty_view_title : $view_title,
           '#delta' => $delta,
@@ -156,6 +152,10 @@ class ViewfieldFormatterDefault extends FormatterBase {
           '#view_id' => $target_id,
           '#display_id' => $display_id,
         ];
+        // Add arguments to view cache keys to allow multiple viewfields with
+        // same view but different arguments per page.
+        $cache_keys = array_merge($rendered_view['#cache']['keys'], $arguments);
+        $elements[$delta]['#content']['#cache']['keys'] = $cache_keys;
       }
     }
 
