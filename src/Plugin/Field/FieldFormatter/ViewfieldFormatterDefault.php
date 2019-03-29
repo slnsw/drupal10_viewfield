@@ -193,11 +193,9 @@ class ViewfieldFormatterDefault extends FormatterBase {
             $found = TRUE;
           }
         }
-        elseif (($comma = strpos($argument_string, ',', $pos)) !== FALSE) {
-          // Otherwise, get everything before next comma.
-          $arguments[] = substr($argument_string, $pos, $comma - $pos);
-          // Skip to after comma and repeat.
-          $pos = $comma + 1;
+        else {
+          $arguments = explode('/', $argument_string);
+          $pos = strlen($argument_string) + 1;
           $found = TRUE;
         }
         if (!$found) {

@@ -107,7 +107,7 @@ class ViewfieldWidgetSelect extends OptionsSelectWidget {
       '#title' => 'Arguments',
       '#type' => 'textfield',
       '#default_value' => $default_arguments,
-      '#description' => $this->t('A comma separated list of arguments to pass to the selected view display.<br>This field supports tokens.'),
+      '#description' => $this->t('Separate contextual filters with a "/". Each filter may use "+" or "," for multi-value arguments.<br>This field supports tokens.'),
       '#weight' => 20,
       '#states' => ['visible' => $primary_field_visible_test],
       '#maxlength' => 255,
