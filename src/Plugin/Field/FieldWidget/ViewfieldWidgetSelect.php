@@ -110,6 +110,7 @@ class ViewfieldWidgetSelect extends OptionsSelectWidget {
       '#description' => $this->t('A comma separated list of arguments to pass to the selected view display.<br>This field supports tokens.'),
       '#weight' => 20,
       '#states' => ['visible' => $primary_field_visible_test],
+      '#maxlength' => 255,
     ];
 
     $element['token_help'] = [
