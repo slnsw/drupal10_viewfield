@@ -9,6 +9,8 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
 
 /**
+ * Plugin implementation of the 'viewfield_select' widget.
+ *
  * @FieldWidget(
  *   id = "viewfield_select",
  *   label = @Translation("Viewfield"),
@@ -202,12 +204,6 @@ class ViewfieldWidgetSelect extends OptionsSelectWidget {
       unset($values[$index]);
     }
 
-    // Transpose selections from field => delta to delta => field.
-    //    $items = [];
-    //    foreach ($values as $value) {
-    //      $items[] = [$element['#key_column'] => $value];
-    //    }
-    //    $form_state->setValueForElement($element, $items);.
     $target_id = !empty($values[0]) ? $values[0] : NULL;
     $form_state->setValueForElement($element, $target_id);
   }
@@ -252,7 +248,7 @@ class ViewfieldWidgetSelect extends OptionsSelectWidget {
    * @return string
    *   The display input field class.
    */
-  protected function createDisplayClass($components) {
+  protected function createDisplayClass(array $components) {
     return implode('-', $components) . '-display-id';
   }
 

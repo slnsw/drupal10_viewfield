@@ -2,12 +2,14 @@
 
 namespace Drupal\viewfield\Plugin\Field\FieldFormatter;
 
+use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\views\Views;
 
 /**
+ * Viewfield Default Formatter plugin definition.
  *
  * @FieldFormatter(
  *   id = "viewfield_default",
@@ -173,7 +175,7 @@ class ViewfieldFormatterDefault extends FormatterBase {
    * @return array
    *   The array of processed arguments.
    */
-  protected function processArguments($argument_string, $entity) {
+  protected function processArguments($argument_string, FieldableEntityInterface $entity) {
     $arguments = [];
 
     if (!empty($argument_string)) {
