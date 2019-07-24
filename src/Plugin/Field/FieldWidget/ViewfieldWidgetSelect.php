@@ -24,7 +24,7 @@ class ViewfieldWidgetSelect extends OptionsSelectWidget {
     $field_type = $this->fieldDefinition->getType();
     $item = $items[$delta];
 
-    $element = ['target_id' => parent::formElement($items, $delta, $element, $form, $form_state)];
+    $element['target_id'] = parent::formElement($items, $delta, $element, $form, $form_state);
     $element['target_id']['#field_type'] = $field_type;
     $element['target_id']['#field_item'] = $item;
     $element['target_id']['#description'] = $this->t('View name.');
