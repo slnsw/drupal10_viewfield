@@ -128,38 +128,43 @@ class ViewfieldFormatterDefault extends FormatterBase {
     $empty_view_title = $this->getSetting('empty_view_title');
 
     foreach ($values as $delta => $value) {
-      $target_id = $value['target_id'];
-      $display_id = $value['display_id'];
-      $arguments = $this->processArguments($value['arguments'], $entity);
 
-      // @see views_embed_view()
-      // @see views_get_view_result()
-      $view = Views::getView($target_id);
-      if (!$view || !$view->access($display_id)) {
-        continue;
-      }
+      if (!empty($value['target_id']) && !empty($value['display_id'])) {
+        $target_id = $value['target_id'];
+        $display_id = $value['display_id'];
+        if (!empty($value['arguments'])) {
+          $arguments = $this->processArguments($value['arguments'], $entity);
+        }
 
-      $view->setArguments($arguments);
-      $view->setDisplay($display_id);
-      $view->preExecute();
-      $view->execute();
+        // @see views_embed_view()
+        // @see views_get_view_result()
+        $view = Views::getView($target_id);
+        if (!$view || !$view->access($display_id)) {
+          continue;
+        }
 
-      $rendered_view = $view->buildRenderable($display_id, $arguments);
-      if (!empty($view->result) || $always_build_output) {
-        $elements[$delta] = [
-          '#theme' => 'viewfield_item',
-          '#content' => $rendered_view,
-          '#title' => $view->getTitle(),
-          '#label_display' => empty($view->result) ? $empty_view_title : $view_title,
-          '#delta' => $delta,
-          '#field_name' => $this->fieldDefinition->getName(),
-          '#view_id' => $target_id,
-          '#display_id' => $display_id,
-        ];
-        // Add arguments to view cache keys to allow multiple viewfields with
-        // same view but different arguments per page.
-        $cache_keys = array_merge($rendered_view['#cache']['keys'], $arguments);
-        $elements[$delta]['#content']['#cache']['keys'] = $cache_keys;
+        $view->setArguments($arguments);
+        $view->setDisplay($display_id);
+        $view->preExecute();
+        $view->execute();
+
+        $rendered_view = $view->buildRenderable($display_id, $arguments);
+        if (!empty($view->result) || $always_build_output) {
+          $elements[$delta] = [
+            '#theme' => 'viewfield_item',
+            '#content' => $rendered_view,
+            '#title' => $view->getTitle(),
+            '#label_display' => empty($view->result) ? $empty_view_title : $view_title,
+            '#delta' => $delta,
+            '#field_name' => $this->fieldDefinition->getName(),
+            '#view_id' => $target_id,
+            '#display_id' => $display_id,
+          ];
+          // Add arguments to view cache keys to allow multiple viewfields with
+          // same view but different arguments per page.
+          $cache_keys = array_merge($rendered_view['#cache']['keys'], $arguments);
+          $elements[$delta]['#content']['#cache']['keys'] = $cache_keys;
+        }
       }
     }
 
