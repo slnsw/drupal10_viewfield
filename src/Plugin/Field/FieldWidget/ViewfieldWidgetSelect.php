@@ -58,29 +58,22 @@ class ViewfieldWidgetSelect extends OptionsSelectWidget {
     $default_display_id = NULL;
     $default_arguments = NULL;
     $item_value = $item->getValue();
-    $triggering_element = $form_state->getTriggeringElement();
 
-    // Use form state values if available when Ajax callback has run.
-    if (isset($triggering_element['#field_type']) && $triggering_element['#field_type'] == $field_type) {
-      $form_state_value = $form_state->getValue($form_state_keys);
-      if (isset($form_state_value['target_id'])) {
-        $default_target_id = $form_state_value['target_id'];
-        $display_id_options = $item->getDisplayOptions($form_state_value['target_id']);
-        // Set current default value if valid, otherwise use the first option.
-        if (isset($display_id_options[$form_state_value['display_id']])) {
-          $default_display_id = $form_state_value['display_id'];
-        }
-        elseif (!empty($display_id_options)) {
-          $default_display_id = current(array_keys($display_id_options));
-        }
-        $default_arguments = $form_state_value['arguments'];
-      }
-    }
-    elseif (isset($item_value['target_id'])) {
+    // Set the default values from the item or form_state.
+    if (isset($item_value['target_id'])) {
       $default_target_id = $item_value['target_id'];
       $display_id_options = $item->getDisplayOptions($item_value['target_id']);
       $default_display_id = $item_value['display_id'];
       $default_arguments = $item_value['arguments'];
+    }
+    else {
+      $values = $form_state->getValue($this->fieldDefinition->getName());
+      if (!empty($values[$delta])) {
+        $default_target_id = $values[$delta]['target_id'];
+        $default_display_id = $values[$delta]['display_id'];
+        $default_arguments = $values[$delta]['arguments'];
+        $display_id_options = $item->getDisplayOptions($default_target_id);
+      }
     }
 
     // #default_value needs special handling, otherwise it consists of an array
@@ -235,6 +228,7 @@ class ViewfieldWidgetSelect extends OptionsSelectWidget {
     $selector = '.' . $this->createDisplayClass($form_state_keys);
     $response = new AjaxResponse();
     $response->addCommand(new HtmlCommand($selector, $html));
+    $form_state->setRebuild(TRUE);
 
     return $response;
   }
