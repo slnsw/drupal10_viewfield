@@ -92,13 +92,15 @@ class ViewfieldFormatterDefault extends FormatterBase {
    */
   public function view(FieldItemListInterface $items, $langcode = NULL) {
     $elements = parent::view($items, $langcode);
-    $elements['#theme'] = 'viewfield';
-    $elements['#entity'] = $items->getEntity();
-    $elements['#entity_type'] = $items->getEntity()->getEntityTypeId();
-    $elements['#bundle'] = $items->getEntity()->bundle();
-    $elements['#field_name'] = $this->fieldDefinition->getName();
-    $elements['#field_type'] = $this->fieldDefinition->getType();
-    $elements['#view_mode'] = $this->viewMode;
+    if (!empty($elements)) {
+      $elements['#theme'] = 'viewfield';
+      $elements['#entity'] = $items->getEntity();
+      $elements['#entity_type'] = $items->getEntity()->getEntityTypeId();
+      $elements['#bundle'] = $items->getEntity()->bundle();
+      $elements['#field_name'] = $this->fieldDefinition->getName();
+      $elements['#field_type'] = $this->fieldDefinition->getType();
+      $elements['#view_mode'] = $this->viewMode;
+    }
 
     return $elements;
   }
