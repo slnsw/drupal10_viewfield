@@ -2,6 +2,7 @@
 
 namespace Drupal\viewfield\Plugin\Field\FieldWidget;
 
+use Drupal\Core\Ajax\InvokeCommand;
 use Drupal\Core\Field\Plugin\Field\FieldWidget\OptionsSelectWidget;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -118,6 +119,8 @@ class ViewfieldWidgetSelect extends OptionsSelectWidget {
       ],
     ];
 
+    $element['#attached']['library'][] = 'viewfield/viewfield';
+
     return $element;
   }
 
@@ -228,6 +231,7 @@ class ViewfieldWidgetSelect extends OptionsSelectWidget {
     $selector = '.' . $this->createDisplayClass($form_state_keys);
     $response = new AjaxResponse();
     $response->addCommand(new HtmlCommand($selector, $html));
+    $response->addCommand(new InvokeCommand($selector, 'ajaxEnableElements'));
     $form_state->setRebuild(TRUE);
 
     return $response;
