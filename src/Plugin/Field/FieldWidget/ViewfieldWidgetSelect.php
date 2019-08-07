@@ -58,6 +58,7 @@ class ViewfieldWidgetSelect extends OptionsSelectWidget {
     $display_id_options = NULL;
     $default_display_id = NULL;
     $default_arguments = NULL;
+    $default_items_to_display = NULL;
     $item_value = $item->getValue();
 
     // Set the default values from the item or form_state.
@@ -66,6 +67,7 @@ class ViewfieldWidgetSelect extends OptionsSelectWidget {
       $display_id_options = $item->getDisplayOptions($item_value['target_id']);
       $default_display_id = $item_value['display_id'];
       $default_arguments = $item_value['arguments'];
+      $default_items_to_display = $item_value['items_to_display'];
     }
     else {
       $values = $form_state->getValue($this->fieldDefinition->getName());
@@ -74,6 +76,7 @@ class ViewfieldWidgetSelect extends OptionsSelectWidget {
         $default_display_id = $values[$delta]['display_id'];
         $default_arguments = $values[$delta]['arguments'];
         $display_id_options = $item->getDisplayOptions($default_target_id);
+        $default_items_to_display = $values[$delta]['items_to_display'];
       }
     }
 
@@ -85,7 +88,8 @@ class ViewfieldWidgetSelect extends OptionsSelectWidget {
     $display_id_class = $this->createDisplayClass($form_state_keys);
 
     // Use primary target_id field to control visibility of secondary ones.
-    $primary_field_name = $form_state_keys[0] . '[' . implode('][', array_slice($form_state_keys, 1)) . '][target_id]';
+    $field_key =  $form_state_keys[0] . '[' . implode('][', array_slice($form_state_keys, 1)) . ']';
+    $primary_field_name = $field_key . '[target_id]';
     $primary_field_visible_test = [':input[name="' . $primary_field_name . '"]' => ['!value' => '_none']];
 
     $element['display_id'] = [
@@ -99,7 +103,25 @@ class ViewfieldWidgetSelect extends OptionsSelectWidget {
       '#states' => ['visible' => $primary_field_visible_test],
     ];
 
-    $element['arguments'] = [
+    $element['view_options'] = [
+      '#type' => 'details',
+      '#title' => 'Options',
+      '#weight' => 20,
+      '#open' => false,
+      '#parents' => [
+        $form_state_keys[0],
+        $form_state_keys[1],
+      ],
+      '#states' => [
+        'open' => [
+          [':input[name="' . $field_key .'[arguments]"]' => ['filled' => TRUE]],
+          [':input[name="' . $field_key .'[items_to_display]"]' => ['filled' => TRUE]],
+        ],
+        'visible' => $primary_field_visible_test,
+      ],
+    ];
+
+    $element['view_options']['arguments'] = [
       '#title' => 'Arguments',
       '#type' => 'textfield',
       '#default_value' => $default_arguments,
@@ -109,7 +131,7 @@ class ViewfieldWidgetSelect extends OptionsSelectWidget {
       '#maxlength' => 255,
     ];
 
-    $element['token_help'] = [
+    $element['view_options']['token_help'] = [
       '#type' => 'item',
       '#weight' => 30,
       '#states' => ['visible' => $primary_field_visible_test],
@@ -119,11 +141,20 @@ class ViewfieldWidgetSelect extends OptionsSelectWidget {
       ],
     ];
 
+    $element['view_options']['items_to_display'] = [
+      '#title' => 'Items to display',
+      '#type' => 'textfield',
+      '#default_value' => $default_items_to_display,
+      '#description' => $this->t('Leave empty for default limit.'),
+      '#weight' => 40,
+      '#states' => ['visible' => $primary_field_visible_test],
+    ];
+
     $element['#attached']['library'][] = 'viewfield/viewfield';
 
     return $element;
   }
-
+  
   /**
    * {@inheritdoc}
    */
