@@ -105,7 +105,7 @@ class ViewfieldWidgetSelect extends OptionsSelectWidget {
 
     $element['view_options'] = [
       '#type' => 'details',
-      '#title' => 'Options',
+      '#title' => 'Advanced options',
       '#weight' => 20,
       '#open' => false,
       '#parents' => [
