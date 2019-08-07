@@ -145,7 +145,7 @@ class ViewfieldWidgetSelect extends OptionsSelectWidget {
       '#title' => 'Items to display',
       '#type' => 'textfield',
       '#default_value' => $default_items_to_display,
-      '#description' => $this->t('Leave empty for default limit.'),
+      '#description' => $this->t('Override the number of items to display. This also disables the pager if one is configured. Leave empty for default limit.'),
       '#weight' => 40,
       '#states' => ['visible' => $primary_field_visible_test],
     ];

@@ -157,13 +157,11 @@ class ViewfieldFormatterDefault extends FormatterBase {
         $view->execute();
 
         // Disable pager, if items_to_display was set.
-        /*
         if (!empty($items_to_display)) {
           $view->pager = new \Drupal\views\Plugin\views\pager\None([], '', []);
           $view->pager->init($view, $view->display_handler);
           $view->pager->setItemsPerPage($items_to_display);
         }
-        */
 
         $rendered_view = $view->buildRenderable($display_id, $arguments);
         if (!empty($view->result) || $always_build_output) {
