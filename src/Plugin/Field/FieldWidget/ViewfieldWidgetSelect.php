@@ -93,7 +93,7 @@ class ViewfieldWidgetSelect extends OptionsSelectWidget {
     $primary_field_visible_test = [':input[name="' . $primary_field_name . '"]' => ['!value' => '_none']];
 
     $element['display_id'] = [
-      '#title' => 'Display',
+      '#title' => $this->t('Display'),
       '#type' => 'select',
       '#options' => $display_id_options,
       '#default_value' => $default_display_id,
@@ -105,7 +105,7 @@ class ViewfieldWidgetSelect extends OptionsSelectWidget {
 
     $element['view_options'] = [
       '#type' => 'details',
-      '#title' => 'Advanced options',
+      '#title' => $this->t('Advanced options'),
       '#weight' => 20,
       '#open' => false,
       '#parents' => [
@@ -122,7 +122,7 @@ class ViewfieldWidgetSelect extends OptionsSelectWidget {
     ];
 
     $element['view_options']['arguments'] = [
-      '#title' => 'Arguments',
+      '#title' => $this->t('Arguments'),
       '#type' => 'textfield',
       '#default_value' => $default_arguments,
       '#description' => $this->t('Separate contextual filters with a "/". Each filter may use "+" or "," for multi-value arguments.<br>This field supports tokens.'),
@@ -142,7 +142,7 @@ class ViewfieldWidgetSelect extends OptionsSelectWidget {
     ];
 
     $element['view_options']['items_to_display'] = [
-      '#title' => 'Items to display',
+      '#title' => $this->t('Items to display'),
       '#type' => 'textfield',
       '#default_value' => $default_items_to_display,
       '#description' => $this->t('Override the number of items to display. This also disables the pager if one is configured. Leave empty for default limit.'),
