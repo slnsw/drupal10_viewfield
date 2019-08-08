@@ -137,6 +137,9 @@ class ViewfieldFormatterDefault extends FormatterBase {
         if (!empty($value['arguments'])) {
           $arguments = $this->processArguments($value['arguments'], $entity);
         }
+        else {
+          $arguments = [];
+        }
 
         // @see views_embed_view()
         // @see views_get_view_result()
@@ -145,7 +148,11 @@ class ViewfieldFormatterDefault extends FormatterBase {
           continue;
         }
 
-        $view->setArguments($arguments);
+        // Set arguments if they exist
+        if (!empty($arguments)) {
+          $view->setArguments($arguments);
+        }
+
         $view->setDisplay($display_id);
 
         // Override items to display if set.
