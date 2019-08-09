@@ -82,3 +82,30 @@ function viewfield_update_8302() {
     }
   }
 }
+
+/**
+ * Add field for items_to_display.
+ */
+function viewfield_update_8303() {
+  $property = 'items_to_display';
+  $db_type = 'varchar';
+  $db_schema = Database::getConnection()->schema();
+
+  if (!$field_configs = \Drupal::entityTypeManager()
+    ->getStorage('field_config')
+    ->loadByProperties(['field_type' => 'viewfield'])) {
+    return;
+  }
+
+  foreach ($field_configs as $field) {
+    /** @var \Drupal\Core\Field\FieldConfigInterface $field */
+    $field = $field;
+    $default_values = $field->getDefaultValueLiteral();
+
+    foreach ($default_values as $key => $value) {
+      $default_values[$key][$property] = '';
+    }
+    $field->setDefaultValue($default_values);
+    $field->save();
+  }
+}
