@@ -36,15 +36,15 @@ class ViewfieldWidgetTest extends ViewfieldFunctionalTestBase {
     $edit = [
       'title[0][value]' => $this->randomMachineName(),
       'field_view[0][target_id]' => "content",
-      'field_view[0][display_id]' => "block",
+      'field_view[0][display_id]' => "block_1",
       'field_view[0][arguments]' => "article",
     ];
 
     $this->drupalPostForm(NULL, $edit, t('Save'));
 
     // Test response.
-    $session->responseContains('articles');
-    $session->responseContains('block');
+    $session->responseContains('content');
+    $session->responseContains('block_1');
     $session->responseContains('article');
   }
 
