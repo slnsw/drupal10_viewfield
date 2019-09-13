@@ -30,7 +30,7 @@ class ViewfieldItem extends EntityReferenceItem {
   public static function defaultStorageSettings() {
     return [
       'target_type' => 'view',
-    ] + parent::defaultStorageSettings();
+    ];
   }
 
   /**
@@ -41,14 +41,14 @@ class ViewfieldItem extends EntityReferenceItem {
       'force_default' => 0,
       'allowed_views' => [],
       'allowed_display_types' => ['block' => 'block'],
-    ] + parent::defaultFieldSettings();
+    ];
   }
 
   /**
    * {@inheritdoc}
    */
   public static function schema(FieldStorageDefinitionInterface $field_definition) {
-    $schema = parent::schema($field_definition);
+    // $schema = parent::schema($field_definition);
     $schema['columns']['target_id']['description'] = 'The ID of the view.';
 
     $schema['columns']['display_id'] = [
