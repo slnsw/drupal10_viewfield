@@ -3,6 +3,8 @@
 namespace Drupal\Tests\viewfield\Functional;
 
 use Drupal\Tests\BrowserTestBase;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
 
 /**
  * Provide basic setup for all Viewfield functional tests.
@@ -60,6 +62,11 @@ abstract class ViewfieldFunctionalTestBase extends BrowserTestBase {
       'field_name' => 'field_view',
       'entity_type' => 'node',
       'type' => 'viewfield',
+      'settings' => [
+        'target_type' => 'view',
+      ],
+      'module' => 'viewfield',
+      'cardinality' => -1,
     ])->save();
     FieldConfig::create([
       'field_name' => 'field_view',
