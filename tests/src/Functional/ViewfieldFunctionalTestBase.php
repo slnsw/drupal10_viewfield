@@ -2,16 +2,17 @@
 
 namespace Drupal\Tests\viewfield\Functional;
 
-use Drupal\Tests\BrowserTestBase;
+use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\views\Entity\View;
 
 /**
  * Provide basic setup for all Viewfield functional tests.
  *
  * @group viewfield
  */
-abstract class ViewfieldFunctionalTestBase extends BrowserTestBase {
+abstract class ViewfieldFunctionalTestBase extends WebDriverTestBase {
 
   /**
    * Modules to enable.
@@ -27,14 +28,14 @@ abstract class ViewfieldFunctionalTestBase extends BrowserTestBase {
   ];
 
   /**
-   * The Entity View Display for the article node type.
+   * The Entity View Display for the article_test node type.
    *
    * @var \Drupal\Core\Entity\Entity\EntityViewDisplay
    */
   protected $display;
 
   /**
-   * The Entity Form Display for the article node type.
+   * The Entity Form Display for the article_test node type.
    *
    * @var \Drupal\Core\Entity\Entity\EntityFormDisplay
    */
@@ -53,13 +54,13 @@ abstract class ViewfieldFunctionalTestBase extends BrowserTestBase {
   protected function setUp() {
     parent::setUp();
 
-    $this->drupalCreateContentType(['type' => 'article']);
-    $this->drupalCreateContentType(['type' => 'page']);
-    $user = $this->drupalCreateUser(['create article content', 'edit own article content']);
+    $this->drupalCreateContentType(['type' => 'article_test']);
+    $this->drupalCreateContentType(['type' => 'page_test']);
+    $user = $this->drupalCreateUser(['create article_test content', 'edit own article_test content']);
     $this->drupalLogin($user);
     $entityTypeManager = $this->container->get('entity_type.manager');
     FieldStorageConfig::create([
-      'field_name' => 'field_view',
+      'field_name' => 'field_view_test',
       'entity_type' => 'node',
       'type' => 'viewfield',
       'settings' => [
@@ -69,28 +70,32 @@ abstract class ViewfieldFunctionalTestBase extends BrowserTestBase {
       'cardinality' => -1,
     ])->save();
     FieldConfig::create([
-      'field_name' => 'field_view',
+      'field_name' => 'field_view_test',
       'label' => 'Viewfield',
       'description' => 'Viewfield description',
       'entity_type' => 'node',
-      'bundle' => 'article',
+      'bundle' => 'article_test',
+      'settings' => [
+        'handler' => 'default',
+        'handler_settings' => [],
+      ],
     ])->save();
     $this->form = $entityTypeManager->getStorage('entity_form_display')
-      ->load('node.article.default');
+      ->load('node.article_test.default');
     $this->display = $entityTypeManager->getStorage('entity_view_display')
-      ->load('node.article.default');
+      ->load('node.article_test.default');
 
     // Create content for views to display.
     for ($i = 1; $i <= 3; $i++) {
       $this->createNode([
         'title' => 'Page ' . $i,
         'status' => TRUE,
-        'type' => 'page',
+        'type' => 'page_test',
       ]);
       $this->createNode([
         'title' => 'Article ' . $i,
         'status' => TRUE,
-        'type' => 'article',
+        'type' => 'article_test',
       ]);
     }
 
@@ -105,7 +110,7 @@ abstract class ViewfieldFunctionalTestBase extends BrowserTestBase {
   protected function createView($items_per_page = 3) {
     View::create([
       'label' => 'Content Test',
-      'id' => 'content',
+      'id' => 'content_test',
       'base_table' => 'node_field_data',
       'display' => [
         'default' => [

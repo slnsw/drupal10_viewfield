@@ -2,8 +2,10 @@
 
 namespace Drupal\viewfield\Plugin\Field\FieldType;
 
+use Drupal\Core\Entity\ContentEntityStorageInterface;
 use Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\TypedData\DataDefinition;
 use Drupal\Core\Field\FieldFilteredMarkup;
@@ -41,15 +43,14 @@ class ViewfieldItem extends EntityReferenceItem {
       'force_default' => 0,
       'allowed_views' => [],
       'allowed_display_types' => ['block' => 'block'],
-    ];
+    ] + parent::defaultFieldSettings();
   }
 
   /**
    * {@inheritdoc}
    */
   public static function schema(FieldStorageDefinitionInterface $field_definition) {
-    // $schema = parent::schema($field_definition);
-    $schema['columns']['target_id']['description'] = 'The ID of the view.';
+    $schema = parent::schema($field_definition);
 
     $schema['columns']['display_id'] = [
       'description' => 'The ID of the view display.',
