@@ -53,7 +53,6 @@ class ViewfieldWidgetTest extends ViewfieldFunctionalTestBase {
     $session->responseContains('content_test');
     $session->responseContains('block_1');
     $session->responseContains('article_test');
-    $session->pageTextContains('boogity boo');
   }
 
 }
