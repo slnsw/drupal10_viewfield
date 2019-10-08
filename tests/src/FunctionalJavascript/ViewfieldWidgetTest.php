@@ -23,22 +23,29 @@ class ViewfieldWidgetTest extends ViewfieldFunctionalTestBase {
     ])->save();
 
     $session = $this->assertSession();
+    $page = $this->getSession()->getPage();
 
     // Confirm field label and description are rendered.
     $this->drupalGet('node/add/article_test');
+
     $session->fieldExists("field_view_test[0][target_id]");
     $session->fieldExists("field_view_test[0][display_id]");
     $session->fieldExists("field_view_test[0][arguments]");
     $session->responseContains('Viewfield');
     $session->responseContains('Viewfield description');
 
+    $viewfield_target = $session->fieldExists('field_view_test[0][target_id');
+
     // Test basic entry of color field.
     $edit = [
       'title[0][value]' => $this->randomMachineName(),
-      'field_view_test[0][target_id]' => "content_test",
-      'field_view_test[0][display_id]' => "block_1",
-      'field_view_test[0][arguments]' => "article_test",
     ];
+
+    $viewfield_target->setValue('content_test');
+    $session->assertWaitOnAjaxRequest();
+
+    $viewfield_display = $session->fieldExists('field_view_test[0][display_id');
+    $viewfield_display->setValue('block_1');
 
     $this->drupalPostForm(NULL, $edit, t('Save'));
 
@@ -46,6 +53,7 @@ class ViewfieldWidgetTest extends ViewfieldFunctionalTestBase {
     $session->responseContains('content_test');
     $session->responseContains('block_1');
     $session->responseContains('article_test');
+    $session->pageTextContains('boogity boo');
   }
 
 }
