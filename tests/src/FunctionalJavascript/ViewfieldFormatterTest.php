@@ -33,14 +33,18 @@ class ViewfieldFormatterTest extends ViewfieldFunctionalTestBase {
     $session->fieldExists("field_view_test[0][display_id]");
     $session->fieldExists("field_view_test[0][arguments]");
 
-    $page->fillField('field_view_test[0][target_id', 'content_test');
-    $this->waitForAjaxToFinish();
+    $viewfield_target = $session->fieldExists('field_view_test[0][target_id]');
 
-    // Test basic entry of Viewfield.
+    // Test basic entry of color field.
     $edit = [
       'title[0][value]' => $this->randomMachineName(),
-      'field_view_test[0][display_id]' => 'block_1',
     ];
+
+    $viewfield_target->setValue('content_test');
+    $session->assertWaitOnAjaxRequest();
+
+    $viewfield_display = $session->fieldExists('field_view_test[0][display_id]');
+    $viewfield_display->setValue('block_1');
 
     $this->drupalPostForm(NULL, $edit, t('Save'));
     $this->assertSession()->responseContains('Article 1');
@@ -73,19 +77,21 @@ class ViewfieldFormatterTest extends ViewfieldFunctionalTestBase {
     $session = $this->assertSession();
     $page = $this->getSession()->getPage();
 
-
     $session->fieldExists("field_view_test[0][target_id]");
     $session->fieldExists("field_view_test[0][display_id]");
     $session->fieldExists("field_view_test[0][arguments]");
 
-    $page->fillField('field_view_test[0][target_id', 'content_test');
-    $this->waitForAjaxToFinish();
+    $viewfield_target = $session->fieldExists('field_view_test[0][target_id]');
 
-    // Test argument handling
+    $viewfield_target->setValue('content_test');
+    $session->assertWaitOnAjaxRequest();
+
+    $viewfield_display = $session->fieldExists('field_view_test[0][display_id]');
+    $viewfield_display->setValue('block_1');
+
+    // Test basic entry of color field.
     $edit = [
       'title[0][value]' => $this->randomMachineName(),
-      'field_view_test[0][target_id]' => "content_test",
-      'field_view_test[0][display_id]' => 'block_1',
       'field_view_test[0][arguments]' => 'page_test',
     ];
 
