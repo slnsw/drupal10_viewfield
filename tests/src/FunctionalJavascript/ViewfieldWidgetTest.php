@@ -34,7 +34,7 @@ class ViewfieldWidgetTest extends ViewfieldFunctionalTestBase {
     $session->responseContains('Viewfield');
     $session->responseContains('Viewfield description');
 
-    $viewfield_target = $session->fieldExists('field_view_test[0][target_id');
+    $viewfield_target = $session->fieldExists('field_view_test[0][target_id]');
 
     // Test basic entry of color field.
     $edit = [
@@ -44,7 +44,7 @@ class ViewfieldWidgetTest extends ViewfieldFunctionalTestBase {
     $viewfield_target->setValue('content_test');
     $session->assertWaitOnAjaxRequest();
 
-    $viewfield_display = $session->fieldExists('field_view_test[0][display_id');
+    $viewfield_display = $session->fieldExists('field_view_test[0][display_id]');
     $viewfield_display->setValue('block_1');
 
     $this->drupalPostForm(NULL, $edit, t('Save'));
