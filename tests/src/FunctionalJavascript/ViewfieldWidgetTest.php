@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\viewfield\Functional;
+namespace Drupal\Tests\viewfield\FunctionalJavascript;
 
 /**
  * Tests Viewfield widgets.

@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\viewfield\Functional;
+namespace Drupal\Tests\viewfield\FunctionalJavascript;
 
 use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
 use Drupal\field\Entity\FieldConfig;
