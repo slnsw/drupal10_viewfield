@@ -97,9 +97,7 @@ class ViewfieldFormatterTest extends ViewfieldFunctionalTestBase {
 
     $this->drupalPostForm('node/add/article_test', $edit, t('Save'));
     $this->assertSession()->responseContains('Page 1');
-    $this->assertSession()->responseContains('Article 1');
-    $this->assertSession()->pageTextContains('This is jus ta test');
-
+    $this->assertSession()->responseNotContains('Article 1');
   }
 
   /**
