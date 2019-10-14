@@ -77,17 +77,16 @@ class ViewfieldFormatterTest extends ViewfieldFunctionalTestBase {
     $session = $this->assertSession();
     $page = $this->getSession()->getPage();
 
-    $session->fieldExists("field_view_test[0][target_id]");
-    $session->fieldExists("field_view_test[0][display_id]");
-    $session->fieldExists("field_view_test[0][arguments]");
-
-    $viewfield_target = $session->fieldExists('field_view_test[0][target_id]');
+    $viewfield_target = $session->fieldExists("field_view_test[0][target_id]");
+    $viewfield_display = $session->fieldExists("field_view_test[0][display_id]");
+    $viewfield_arguments = $session->fieldExists("field_view_test[0][arguments]");
 
     $viewfield_target->setValue('content_test');
     $session->assertWaitOnAjaxRequest();
 
-    $viewfield_display = $session->fieldExists('field_view_test[0][display_id]');
     $viewfield_display->setValue('block_1');
+
+    $viewfield_arguments->setValue('page_test');
 
     // Test basic entry of color field.
     $edit = [
