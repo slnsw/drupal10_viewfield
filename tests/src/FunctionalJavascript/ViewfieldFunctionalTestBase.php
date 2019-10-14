@@ -131,22 +131,22 @@ abstract class ViewfieldFunctionalTestBase extends WebDriverTestBase {
               ],
             ],
             'use_ajax' => TRUE,
-          ],
-          'arguments' => [
-            'type' => [
-              'id' => 'type',
-              'table' => 'node_field_data',
-              'field' => 'type',
-              'relationship' => 'none',
-              'group_type' => 'group',
-              'default_action' => 'ignore',
-              'exception' => [
-                'value' => 'all',
+            'arguments' => [
+              'type' => [
+                'id' => 'type',
+                'table' => 'node_field_data',
+                'field' => 'type',
+                'relationship' => 'none',
+                'group_type' => 'group',
+                'default_action' => 'ignore',
+                'exception' => [
+                  'value' => 'all',
+                ],
+                'default_argument_type' => 'fixed',
+                'entity_type' => 'node',
+                'entity_field' => 'type',
+                'plugin_id' => 'node_type',
               ],
-              'default_argument_type' => 'fixed',
-              'entity_type' => 'node',
-              'entity_field' => 'type',
-              'plugin_id' => 'node_type',
             ],
           ],
         ],
