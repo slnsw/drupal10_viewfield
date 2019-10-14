@@ -92,7 +92,6 @@ class ViewfieldFormatterTest extends ViewfieldFunctionalTestBase {
     // Test basic entry of color field.
     $edit = [
       'title[0][value]' => $this->randomMachineName(),
-      'field_view_test[0][arguments]' => 'page_test',
     ];
 
     $this->drupalPostForm(NULL, $edit, t('Save'));
