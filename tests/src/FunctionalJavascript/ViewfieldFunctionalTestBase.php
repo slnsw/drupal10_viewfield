@@ -137,7 +137,7 @@ abstract class ViewfieldFunctionalTestBase extends WebDriverTestBase {
               'id' => 'type',
               'table' => 'node_field_data',
               'field' => 'type',
-              'relatinoship' => 'none',
+              'relationship' => 'none',
               'group_type' => 'group',
               'default_action' => 'ignore',
               'exception' => [
