@@ -130,7 +130,7 @@ class ViewfieldFormatterTest extends ViewfieldFunctionalTestBase {
     // Submit node form.
     $this->drupalPostForm(NULL, $edit, t('Save'));
 
-    // Test results to verify that only page nodes are shown.
+    // Test results to verify formatter.
     $this->assertSession()->responseContains('View: Content Test (content_test)');
     $this->assertSession()->responseContains('Display: Block (block_1)');
   }
