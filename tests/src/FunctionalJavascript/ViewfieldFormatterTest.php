@@ -83,8 +83,8 @@ class ViewfieldFormatterTest extends ViewfieldFunctionalTestBase {
 
     // Submit node form.
     $this->drupalPostForm(NULL, $edit, t('Save'));
-    $this->assertSession()->responseContains('View: (content_test)');
-    $this->assertSession()->responseContains('Display: Block (block_1)');
+    $this->assertSession()->pageTextContains('View: (content_test)');
+    $this->assertSession()->pageTextContains('Display: Block (block_1)');
   }
 
   /**
