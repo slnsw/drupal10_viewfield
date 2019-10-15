@@ -86,6 +86,8 @@ class ViewfieldFormatterTest extends ViewfieldFunctionalTestBase {
 
     $viewfield_display->setValue('block_1');
 
+    $this->click('#field-view-test-values details');
+
     $viewfield_arguments->setValue('page_test');
 
     // Test basic entry of color field.
