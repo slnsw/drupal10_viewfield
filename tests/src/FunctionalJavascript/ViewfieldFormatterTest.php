@@ -53,7 +53,40 @@ class ViewfieldFormatterTest extends ViewfieldFunctionalTestBase {
    * Test viewfield_title formatter.
    */
   public function testViewfieldFormatterTitle() {
+    $this->form->setComponent('field_view_test', [
+      'type' => 'viewfield_select',
+    ])->save();
 
+    $this->display->setComponent('field_view_test', [
+      'type' => 'viewfield_title',
+      'weight' => 1,
+      'label' => 'hidden',
+    ])->save();
+
+    // Display creation form.
+    $this->drupalGet('node/add/article_test');
+    $session = $this->assertSession();
+
+    $viewfield_target = $session->fieldExists("field_view_test[0][target_id]");
+    $viewfield_display = $session->fieldExists("field_view_test[0][display_id]");
+
+    // Set a random title for the node.
+    $edit = [
+      'title[0][value]' => $this->randomMachineName(),
+    ];
+
+    // Select a View.
+    $viewfield_target->setValue('content_test');
+    $session->assertWaitOnAjaxRequest();
+
+    // Select a View Display.
+    $viewfield_display->setValue('block_1');
+
+    // Submit node form.
+    $this->drupalPostForm(NULL, $edit, t('Save'));
+
+    $this->assertSession()->responseContains('Article 1');
+    $this->assertSession()->responseContains('Page 1');
   }
 
   /**
@@ -98,8 +131,8 @@ class ViewfieldFormatterTest extends ViewfieldFunctionalTestBase {
     $this->drupalPostForm(NULL, $edit, t('Save'));
 
     // Test results to verify that only page nodes are shown.
-    $this->assertSession()->responseContains('Page 1');
-    $this->assertSession()->responseNotContains('Article 1');
+    $this->assertSession()->responseContains('View: Content Test (content_test)');
+    $this->assertSession()->responseContains('Display: Block (block_1)');
   }
 
   /**
