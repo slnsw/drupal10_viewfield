@@ -85,8 +85,8 @@ class ViewfieldFormatterTest extends ViewfieldFunctionalTestBase {
     // Submit node form.
     $this->drupalPostForm(NULL, $edit, t('Save'));
 
-    $this->assertSession()->responseContains('Article 1');
-    $this->assertSession()->responseContains('Page 1');
+    $this->assertSession()->responseContains('View: Content Test (content_test)');
+    $this->assertSession()->responseContains('Display: Block (block_1)');
   }
 
   /**
@@ -130,9 +130,9 @@ class ViewfieldFormatterTest extends ViewfieldFunctionalTestBase {
     // Submit node form.
     $this->drupalPostForm(NULL, $edit, t('Save'));
 
-    // Test results to verify formatter.
-    $this->assertSession()->responseContains('View: Content Test (content_test)');
-    $this->assertSession()->responseContains('Display: Block (block_1)');
+    // Test results to verify that only page nodes are shown.
+    $this->assertSession()->responseContains('Page 1');
+    $this->assertSession()->responseNotContains('Article 1');
   }
 
   /**
