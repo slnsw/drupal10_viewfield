@@ -184,7 +184,45 @@ class ViewfieldFormatterTest extends ViewfieldFunctionalTestBase {
    * Test Viewfield "Empty" view results.
    */
   public function testViewfieldEmptyView() {
+    $this->form->setComponent('field_view_test', [
+      'type' => 'viewfield_select',
+    ])->save();
 
+    $this->display->setComponent('field_view_test', [
+      'type' => 'viewfield_default',
+      'weight' => 1,
+      'label' => 'hidden',
+    ])->save();
+
+    // Display creation form.
+    $this->drupalGet('node/add/article_test');
+    $session = $this->assertSession();
+
+    $viewfield_target = $session->fieldExists("field_view_test[0][target_id]");
+    $viewfield_display = $session->fieldExists("field_view_test[0][display_id]");
+    $viewfield_arguments = $session->fieldExists("field_view_test[0][arguments]");
+
+    // Select a View.
+    $viewfield_target->setValue('content_test');
+    $session->assertWaitOnAjaxRequest();
+
+    // Select a display from the View.
+    $viewfield_display->setValue('block_1');
+
+    // Open the details element so we can fill in an argument.
+    $this->click('#field-view-test-values details');
+    $viewfield_arguments->setValue('content_type_null');
+
+    // Fill in a random title.
+    $edit = [
+      'title[0][value]' => $this->randomMachineName(),
+    ];
+
+    // Submit node form.
+    $this->drupalPostForm(NULL, $edit, t('Save'));
+
+    // Test results to verify that only page nodes are shown.
+    $this->assertSession()->elementNotExists('css', 'div.field--name-field-view-test');
   }
 
 }
