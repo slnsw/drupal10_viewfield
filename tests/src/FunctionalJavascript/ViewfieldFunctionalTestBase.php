@@ -28,6 +28,11 @@ abstract class ViewfieldFunctionalTestBase extends WebDriverTestBase {
   ];
 
   /**
+   * Set default theme.
+   */
+  protected $defaultTheme = 'stark';
+
+  /**
    * The Entity View Display for the article_test node type.
    *
    * @var \Drupal\Core\Entity\Entity\EntityViewDisplay
