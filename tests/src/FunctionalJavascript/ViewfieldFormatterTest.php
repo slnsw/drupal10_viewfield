@@ -176,7 +176,7 @@ class ViewfieldFormatterTest extends ViewfieldFunctionalTestBase {
     $this->drupalPostForm(NULL, $edit, t('Save'));
 
     // Test results to verify that only page nodes are shown.
-    $rows = $page->findAll('css', '.view-content .views-row');
+    $rows = $page->findAll('css', '.views-element-container div .views-row');
     $this->assertCount(2, $rows);
   }
 
